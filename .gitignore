@@ -1,0 +1,7 @@
+/vendor
+/.idea
+.editorconfig
+.env
+.styleci.yml
+.phpunit.result.cache
+composer.lock
