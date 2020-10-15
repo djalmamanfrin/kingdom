@@ -15,9 +15,9 @@ class Project extends Migration
             $table->unsignedInteger('branch_id');
             $table->unsignedInteger('project_type_id');
             $table->string('title');
-            $table->mediumText('description');
-            $table->timestamp('delivery_at');
-            $table->timestamp('expected_at');
+            $table->mediumText('description')->nullable();
+            $table->timestamp('delivery_at')->nullable();
+            $table->timestamp('expected_at')->nullable();
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')

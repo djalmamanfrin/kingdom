@@ -14,7 +14,7 @@ class Church extends Migration
             $table->increments('id');
             $table->unsignedInteger('branch_id');
             $table->unsignedInteger('address_id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->char('cnpj', 14)->unique();
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));

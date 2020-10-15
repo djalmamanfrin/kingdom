@@ -7,6 +7,6 @@ class DeliverySeeder extends Seeder
 {
     public function run()
     {
-        factory(Delivery::class, 10)->create();
+        factory(Delivery::class, 30)->create();
     }
 }

@@ -7,6 +7,6 @@ class ChurchSeeder extends Seeder
 {
     public function run()
     {
-        factory(Church::class, 10)->create();
+        factory(Church::class, 30)->create();
     }
 }

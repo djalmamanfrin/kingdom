@@ -7,6 +7,6 @@ class ProjectTypeSeeder extends Seeder
 {
     public function run()
     {
-        factory(ProjectType::class, 10)->create();
+        factory(ProjectType::class, 30)->create();
     }
 }

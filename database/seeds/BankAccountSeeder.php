@@ -7,6 +7,6 @@ class BankAccountSeeder extends Seeder
 {
     public function run()
     {
-        factory(BankAccount::class, 10)->create();
+        factory(BankAccount::class, 30)->create();
     }
 }

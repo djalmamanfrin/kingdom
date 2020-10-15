@@ -7,6 +7,6 @@ class IndicationSeeder extends Seeder
 {
     public function run()
     {
-        factory(Indication::class, 10)->create();
+        factory(Indication::class, 30)->create();
     }
 }

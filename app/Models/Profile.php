@@ -4,18 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserType extends Model
+class Perfil extends Model
 {
-    protected $table = 'user_type';
+    protected $table = 'perfil';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['name', 'description'];
-
-    public function users()
-    {
-        return $this->belongsToMany('App\User', 'user_id');
-    }
 
     public function indicators()
     {

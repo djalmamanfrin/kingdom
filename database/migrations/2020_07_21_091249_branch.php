@@ -13,7 +13,7 @@ class Branch extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('email');
             $table->string('site')->nullable();
             $table->timestamp('created_at')

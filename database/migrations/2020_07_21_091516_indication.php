@@ -13,7 +13,7 @@ class Indication extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('user_type_id');
+            $table->unsignedInteger('profile_id');
             $table->string('name');
             $table->string('email');
             $table->timestamp('created_at')
@@ -22,7 +22,7 @@ class Indication extends Migration
                 ->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
             $table->foreign('user_id')->references('id')->on('user');
-            $table->foreign('user_type_id')->references('id')->on('user_type');
+            $table->foreign('profile_id')->references('id')->on('profile');
         });
     }
 

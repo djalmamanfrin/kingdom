@@ -7,6 +7,6 @@ class ProjectItemSeeder extends Seeder
 {
     public function run()
     {
-        factory(ProjectItem::class, 10)->create();
+        factory(ProjectItem::class, 30)->create();
     }
 }

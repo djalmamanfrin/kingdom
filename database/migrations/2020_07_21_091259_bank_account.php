@@ -13,19 +13,19 @@ class BankAccount extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('name');
+            $table->unsignedInteger('bank_id');
+            $table->string('nickname')->nullable();
             $table->string('agency');
             $table->string('account');
-            $table->char('cpf', 11)->nullable();
-            $table->char('cnpj', 14)->nullable();
-            $table->string('type'); // conta corrent ou conta poupança
+            $table->char('document', 14)->unique();
+            $table->tinyInteger('type')->comment('1 - conta corrente; 2 - conta poupança');
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
-            $table->index(['cpf', 'cnpj']);
             $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('bank_id')->references('id')->on('bank');
         });
     }
 

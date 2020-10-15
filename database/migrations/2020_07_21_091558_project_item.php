@@ -19,8 +19,8 @@ class ProjectItem extends Migration
             $table->timestamp('updated_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
-            $table->foreign('project_id')->references('id')->on('project');
-            $table->foreign('product_id')->references('id')->on('product');
+            $table->foreign('project_id')->references('id')->on('project')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
         });
     }
 

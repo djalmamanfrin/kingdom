@@ -3,11 +3,11 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserTypeSeeder extends Seeder
+class ProfileSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('user_type')->insert([
+        DB::table('profile')->insert([
             [
                 'name' => 'client',
                 'description' => 'Perfil responsável por comprar na aplicação. Poderá solicitar a troca do perfil para seller'
