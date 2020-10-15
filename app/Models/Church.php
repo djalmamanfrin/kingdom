@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 
 class Church extends Model
 {
@@ -14,11 +15,19 @@ class Church extends Model
 
     public function branch()
     {
-        return $this->belongsTo('App\Branch', 'branch_id');
+        $collection = $this->belongsTo(Branch::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('Branch collection is empty');
+        }
+        return $collection->get(0);
     }
 
-    public function address()
+    public function address(): Address
     {
-        return $this->hasOne('App\Address', 'address_id');
+        $collection = $this->belongsTo(Address::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('Address collection is empty');
+        }
+        return $collection->get(0);
     }
 }

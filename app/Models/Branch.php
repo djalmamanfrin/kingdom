@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 
 class Branch extends Model
 {
@@ -12,28 +13,22 @@ class Branch extends Model
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['user_id', 'name', 'email', 'site'];
 
-    public function user()
+    public function user(): User
     {
-        return $this->belongsTo('App\User', 'user_id');
+        $collection = $this->belongsTo(User::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('User collection is empty');
+        }
+        return $collection->get(0);
     }
 
     public function projects()
     {
-        return $this->hasMany('App\Project', 'project_id');
+        return $this->hasMany(Project::class);
     }
 
     public function churches()
     {
-        return $this->hasMany('App\Church', 'church_id');
-    }
-
-    public function address()
-    {
-        return $this->hasOne('App\Address', 'address_id');
-    }
-
-    public function bankAccounts()
-    {
-        return $this->hasMany('App\BankAccount', 'bank_account_id');
+        return $this->hasMany(Church::class);
     }
 }

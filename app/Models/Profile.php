@@ -4,13 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Perfil extends Model
+class Profile extends Model
 {
-    protected $table = 'perfil';
+    const CLIENT = 1;
+    const SELLER = 2;
+    const RESPONSIBLE = 3;
+
+    protected $table = 'profile';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['name', 'description'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function indicators()
     {

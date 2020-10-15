@@ -10,7 +10,7 @@ class Indication extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $casts = ['date' => 'Timestamp'];
-    protected $fillable = ['user_id', 'user_type_id', 'name', 'email', 'type'];
+    protected $fillable = ['user_id', 'profile_id', 'name', 'email', 'type'];
 
     public function user()
     {
@@ -19,6 +19,6 @@ class Indication extends Model
 
     public function indicationType()
     {
-        return $this->hasOne('App\UserType', 'user_type_id');
+        return $this->hasOne('App\UserType', 'profile_id');
     }
 }

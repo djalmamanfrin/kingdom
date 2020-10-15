@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 
 class BankAccount extends Model
 {
@@ -10,10 +11,23 @@ class BankAccount extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $casts = ['date' => 'Timestamp'];
-    protected $fillable = ['user_id', 'name', 'agency', 'account', 'type', 'cpf', 'cnpj'];
+    protected $fillable = ['user_id', 'bank_id', 'nickname', 'document', 'agency', 'account', 'type'];
 
-    public function user()
+    public function user(): User
     {
-        return $this->belongsTo('App\User', 'user_id');
+        $collection = $this->belongsTo(User::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('User collection is empty', 422);
+        }
+        return $collection->get(0);
+    }
+
+    public function bank(): Bank
+    {
+        $collection = $this->belongsTo(Bank::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('Bank collection is empty', 422);
+        }
+        return $collection->get(0);
     }
 }

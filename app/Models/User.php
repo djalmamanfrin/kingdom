@@ -6,46 +6,57 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use InvalidArgumentException;
 use Laravel\Lumen\Auth\Authorizable;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable;
+    use SoftDeletes, Authenticatable, Authorizable;
 
     protected $table = 'user';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $hidden = ['password'];
     protected $casts = ['date' => 'Timestamp'];
-    protected $fillable = ['user_type_id', 'name', 'email', 'password', 'is_member', 'rg', 'cpf'];
+    protected $fillable = ['profile_id', 'name', 'email', 'password', 'is_member', 'rg', 'cpf'];
 
-    public function type()
+    public function profile(): Profile
     {
-        return $this->hasMany('App\UserType', 'user_type_id');
+        $collection = $this->belongsTo(Profile::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('Profile collection is empty');
+        }
+        return $collection->get(0);
     }
 
     public function branches()
     {
-        return $this->hasMany('App\Branch', 'branch_id');
+        return $this->hasMany(Branch::class);
     }
 
     public function bankCards()
     {
-        return $this->hasMany('App\BankCard', 'bank_card_id');
+        return $this->hasMany(BankCard::class);
+    }
+
+    public function bankAccounts()
+    {
+        return $this->hasMany(BankAccount::class);
     }
 
     public function addresses()
     {
-        return $this->hasMany('App\Address', 'address_id');
+        return $this->hasMany(Address::class);
     }
 
     public function indications()
     {
-        return $this->hasMany('App\Indication', 'indication_id');
+        return $this->hasMany(Indication::class);
     }
 
     public function notifications()
     {
-        return $this->hasMany('App\Notification', 'notification_id');
+        return $this->hasMany(Notification::class);
     }
 }

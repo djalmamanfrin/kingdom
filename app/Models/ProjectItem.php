@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 
 class ProjectItem extends Model
 {
@@ -14,11 +15,19 @@ class ProjectItem extends Model
 
     public function project()
     {
-        return $this->belongsTo('App\Project', 'project_id');
+        $collection = $this->belongsTo(Project::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('Project collection is empty', 422);
+        }
+        return $collection->get(0);
     }
 
     public function product()
     {
-        return $this->hasOne('App\Product', 'product_id');
+        $collection = $this->belongsTo(Product::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('Product collection is empty', 422);
+        }
+        return $collection->get(0);
     }
 }

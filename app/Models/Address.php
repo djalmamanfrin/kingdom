@@ -14,11 +14,18 @@ class Address extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User', 'user_id');
+        return $this->hasOne(User::class);
     }
 
     public function city()
     {
-        return $this->belongsTo('App\City', 'city_id');
+        return $this->belongsTo(City::class);
+    }
+
+    public function church(): array
+    {
+        $address = parent::toArray();
+        unset($address['user_id']);
+        return $address;
     }
 }

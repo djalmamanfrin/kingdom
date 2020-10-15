@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
+use InvalidArgumentException;
 
 class Project extends Model
 {
@@ -12,13 +14,34 @@ class Project extends Model
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['branch_id', 'project_type_id', 'title', 'description', 'delivery_at', 'expected_at'];
 
-    public function branch()
+    public function branch(): Branch
     {
-        return $this->belongsTo('App\Branch', 'branch_id');
+        $collection = $this->belongsTo(Branch::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('Branch collection is empty', 422);
+        }
+        return $collection->get(0);
     }
 
-    public function projectType()
+    public function projectType(): ProjectType
     {
-        return $this->hasOne('App\ProjectType', 'project_type_id');
+        $collection = $this->belongsTo(ProjectType::class)->get();
+        if ($collection->isEmpty()) {
+            throw new InvalidArgumentException('Project Type collection is empty', 422);
+        }
+        return $collection->get(0);
+    }
+
+    public function items(): Collection
+    {
+        return $this->hasMany(ProjectItem::class)->get();
+    }
+
+    public function toArray()
+    {
+        $project = parent::toArray();
+        unset($project['project_type_id']);
+        $project['type'] = $this->projectType()->name;
+        return $project;
     }
 }
