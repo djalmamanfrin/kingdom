@@ -23,9 +23,8 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
-
-// $app->withEloquent();
+$app->withFacades();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +59,22 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('dictionaries/indications');
+$app->configure('dictionaries/notifications');
+$app->configure('dictionaries/address');
+$app->configure('dictionaries/church');
+$app->configure('dictionaries/project');
+$app->configure('dictionaries/bank_cards');
+$app->configure('dictionaries/bank_accounts');
+$app->configure('dictionaries/profile');
+$app->configure('dictionaries/branch');
+$app->configure('dictionaries/user');
+$app->configure('validate_middleware');
+// Monta dinamicamente os arquivos de configuração da pasta dictionaries
+// foreach (glob(__DIR__ . '/../config/dictionaries/*.php') as $config) {
+//     list($name, $extension) = explode('.', basename($config));
+//     $app->configure($name);
+// }
 
 /*
 |--------------------------------------------------------------------------
@@ -72,13 +87,15 @@ $app->configure('app');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class,
+]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'validate_field' => \App\Http\Middleware\ValidateFieldMiddleware::class,
+    // 'auth' => App\Http\Middleware\V1\Kerberos\AuthMiddleware::class,
+    // 'can' => App\Http\Middleware\V1\Kerberos\TicketsMiddleware::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -91,7 +108,7 @@ $app->configure('app');
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
