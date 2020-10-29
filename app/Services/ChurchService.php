@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Address;
 use App\Models\Church;
 use Exception;
-use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
 class ChurchService extends AbstractService implements ChurchServiceInterface
