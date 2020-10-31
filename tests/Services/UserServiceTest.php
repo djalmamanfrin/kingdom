@@ -94,18 +94,6 @@ class UserServiceTest extends TestCase
      * @dataProvider service
      * @param UserServiceInterface $user
      */
-    public function testExceptionIfUserIdNotFound(UserServiceInterface $user)
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionCode(422);
-        $this->expectExceptionMessage('The user not found');
-        $user->setPrimaryKey(1000)->get();
-    }
-
-    /**
-     * @dataProvider service
-     * @param UserServiceInterface $user
-     */
     public function testIfTheMethodReturnIsAnUserInstance(UserServiceInterface $user)
     {
         $id = User::pluck('id')->random();

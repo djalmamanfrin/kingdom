@@ -2,23 +2,23 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 abstract class AbstractService
 {
     protected array $primaryKeys;
     protected Model $model;
+    protected string $modelName;
 
     public function __construct(Model $model)
     {
         $this->primaryKeys = [];
         $this->model = $model;
+        $this->modelName = str_replace('_' , ' ', $this->model->getTable());
     }
 
     protected function setPrimaryKey(int $id)
@@ -38,9 +38,9 @@ abstract class AbstractService
         }
     }
 
-    public function setFillable(Request $request, string $config)
+    public function setFillable(array $params)
     {
-        $this->model->fillable($request->all());
+        $this->model->fillable($params);
     }
 
     protected function getFillable(): array
@@ -59,9 +59,7 @@ abstract class AbstractService
             $id = current($this->primaryKeys);
             return $this->model->newQuery()->where('id', $id)->firstOrFail();
         } catch (Exception $e) {
-            $model = $this->model->getTable();
-            $model =  str_replace('_' , ' ', $model);
-            throw new InvalidArgumentException("The $model not found", 422);
+            throw new InvalidArgumentException("The " . $this->modelName . " not found", 422);
         }
     }
 
@@ -70,6 +68,34 @@ abstract class AbstractService
         $isStored = $this->model->newQuery()->where($column, $value)->exists();
         $errorMessage = is_null($message) ? ucfirst($column) . ' already stored' : $message;
         if ($isStored) {
+            throw new InvalidArgumentException($errorMessage, 422);
+        }
+    }
+
+    public function store()
+    {
+        $fill = $this->getFillable();
+        $this->model::create($fill);
+    }
+
+    public function update()
+    {
+        $fill = $this->getFillable();
+        $this->get()->update($fill);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function delete()
+    {
+        try {
+            DB::beginTransaction();
+            $this->get()->delete();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            $errorMessage = 'Error to delete' . $this->modelName . ': ' . $e->getMessage();
             throw new InvalidArgumentException($errorMessage, 422);
         }
     }

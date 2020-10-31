@@ -37,21 +37,8 @@ class BranchService extends AbstractService implements BranchServiceInterface
     public function store()
     {
         $fill = $this->getFillable();
-        if (! array_key_exists('name', $fill)) {
-            throw new InvalidArgumentException('The name field must be informed', 422);
-        }
-        if (! array_key_exists('user_id', $fill)) {
-            $message = 'The user_id field must be informed to verify if the user exists';
-            throw new InvalidArgumentException($message, 422);
-        }
         User::query()->findOrFail($fill['user_id']);
-
-        if (! array_key_exists('email', $fill)) {
-            $message = 'Email must be informed to verify if the branch was stored';
-            throw new InvalidArgumentException($message, 422);
-        }
         $this->isStored('email', $fill['email']);
-
         $this->model::create($fill);
     }
 

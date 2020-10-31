@@ -112,30 +112,7 @@ class ProjectServiceTest extends TestCase
         $this->assertInstanceOf(Project::class, $projectModel);
         $this->assertInstanceOf(ProjectType::class, $projectModel->projectType());
         $this->assertInstanceOf(Branch::class, $projectModel->branch());
-        $this->assertInstanceOf(Collection::class, $projectModel->items()->get());
-    }
-
-    /**
-     * @dataProvider service
-     * @param ProjectServiceInterface $project
-     */
-    public function testExceptionIfProjectIdNotFound(ProjectServiceInterface $project)
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionCode(422);
-        $this->expectExceptionMessage('The project not found');
-        $project->setPrimaryKey(1000)->get();
-    }
-
-    /**
-     * @dataProvider service
-     * @param ProjectServiceInterface $project
-     * @throws Exception
-     */
-    public function testDeleteAction(ProjectServiceInterface $project) {
-        $id = Project::pluck('id')->random();
-        $project->setPrimaryKey($id)->delete();
-        $this->expectNotToPerformAssertions();
+        $this->assertInstanceOf(Collection::class, $projectModel->items());
     }
 
     public function service(): array

@@ -40,7 +40,7 @@ class Project extends Model
     public function toArray()
     {
         $project = parent::toArray();
-        unset($project['project_type_id']);
+        // unset($project['project_type_id']);
         $project['type'] = $this->projectType()->name;
         return $project;
     }

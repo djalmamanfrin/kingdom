@@ -10,7 +10,10 @@ interface BankAccountServiceInterface
 {
     public function setPrimaryKey(int $id): BankAccountService;
     public function setPrimaryKeys(array $ids): BankAccountService;
-    public function setFillable(Request $request);
+    public function setFillable(array $params);
     public function get(): BankAccount;
     public function all(): LengthAwarePaginator;
+    public function store();
+    public function update();
+    public function delete();
 }

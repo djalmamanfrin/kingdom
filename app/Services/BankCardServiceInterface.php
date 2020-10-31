@@ -11,4 +11,7 @@ interface BankCardServiceInterface
     public function setPrimaryKeys(array $ids): BankCardService;
     public function get(): BankCard;
     public function all(): LengthAwarePaginator;
+    public function store();
+    public function update();
+    public function delete();
 }

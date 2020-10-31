@@ -1,20 +1,28 @@
 <?php
 
-namespace Tests\API\BankAccountController;
+namespace Tests\API;
 
 use App\Models\BankAccount;
+use App\Models\Branch;
+use App\Models\Church;
+use App\Models\Project;
+use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class UpdateMethodTest extends TestCase
 {
-    private const URI = 'api/v1/bank-accounts/';
-
-    public function testUpdateBankAccountWithHttpPutRequest()
+    /**
+     * @dataProvider uriAndModelPath
+     *
+     * @param string $uri
+     * @param string $model
+     */
+    public function testUpdateBankAccountWithHttpPutRequest(string $uri, string $model)
     {
-        $id = BankAccount::pluck('id')->random();
-        $payload = factory(BankAccount::class)->make()->toArray();
-        $response = $this->call('PUT', self::URI . $id, $payload);
+        $id = $model::pluck('id')->random();
+        $payload = factory($model)->make()->toArray();
+        $response = $this->call('PUT', $uri . $id, $payload);
         $this->assertEquals(Response::HTTP_OK, $response->status());
         $this->seeJsonStructure([]);
     }
@@ -38,5 +46,15 @@ class UpdateMethodTest extends TestCase
         $response = $this->call('PATCH', self::URI . $id, $payload);
         $this->assertEquals(Response::HTTP_OK, $response->status());
         $this->seeJsonStructure([]);
+    }
+
+    public function uriAndModelPath(): array
+    {
+        return [
+            ['api/v1/bank-accounts/', BankAccount::class],
+            ['api/v1/branches/', Branch::class],
+            ['api/v1/churches/', Church::class],
+            ['api/v1/projects/', Project::class],
+        ];
     }
 }
