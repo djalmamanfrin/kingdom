@@ -41,7 +41,7 @@ class BankAccountController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $this->bankAccount->setFillable($request);
+            $this->bankAccount->setFillable($request->all());
             $this->bankAccount->store();
             return responseHandler()->success(Response::HTTP_CREATED);
         } catch (Throwable $e) {
@@ -52,7 +52,7 @@ class BankAccountController extends Controller
     public function update($id, Request $request): JsonResponse
     {
         try {
-            $this->bankAccount->setFillable($request);
+            $this->bankAccount->setFillable($request->all());
             $this->bankAccount->setPrimaryKey($id)->update();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {

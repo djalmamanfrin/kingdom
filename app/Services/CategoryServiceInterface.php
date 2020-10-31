@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\Church;
+use App\Models\Category;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-interface ChurchServiceInterface
+interface CategoryServiceInterface
 {
-    public function setPrimaryKey(int $id): ChurchService;
-    public function setPrimaryKeys(array $ids): ChurchService;
+    public function setPrimaryKey(int $id): CategoryService;
+    public function setPrimaryKeys(array $ids): CategoryService;
     public function setFillable(array $params);
-    public function get(): Church;
+    public function get(): Category;
     public function all(): LengthAwarePaginator;
     public function store();
     public function update();

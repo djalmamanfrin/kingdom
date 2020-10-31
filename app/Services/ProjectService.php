@@ -40,19 +40,7 @@ class ProjectService extends AbstractService implements ProjectServiceInterface
     public function store()
     {
         $fill = $this->getFillable();
-        if (! array_key_exists('title', $fill)) {
-            throw new InvalidArgumentException('The title field must be informed', 422);
-        }
-        if (! array_key_exists('branch_id', $fill)) {
-            $message = 'The branch_id field must be informed to verify if the branch exists';
-            throw new InvalidArgumentException($message, 422);
-        }
         Branch::query()->findOrFail($fill['branch_id']);
-
-        if (! array_key_exists('project_type_id', $fill)) {
-            $message = 'The project_type_id field must be informed to verify if the project type exists';
-            throw new InvalidArgumentException($message, 422);
-        }
         ProjectType::query()->findOrFail($fill['project_type_id']);
         $this->model::create($fill);
     }

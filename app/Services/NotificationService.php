@@ -2,35 +2,34 @@
 
 namespace App\Services;
 
-use App\Models\Bank;
-use App\Models\BankAccount;
+use App\Models\Notification;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
-class BankAccountService extends AbstractService implements BankAccountServiceInterface
+class NotificationService extends AbstractService implements NotificationServiceInterface
 {
     public function __construct()
     {
-        parent::__construct(new BankAccount());
+        parent::__construct(new Notification());
     }
 
-    public function setPrimaryKeys(array $ids): BankAccountService
+    public function setPrimaryKeys(array $ids): NotificationService
     {
         parent::setPrimaryKeys($ids);
         return $this;
     }
 
-    public function setPrimaryKey(int $id): BankAccountService
+    public function setPrimaryKey(int $id): NotificationService
     {
         parent::setPrimaryKey($id);
         return $this;
     }
 
-    public function get(): BankAccount
+    public function get(): Notification
     {
-        /** @var BankAccount $project */
+        /** @var Notification $project */
         $project = parent::get();
         return $project;
     }
@@ -39,7 +38,7 @@ class BankAccountService extends AbstractService implements BankAccountServiceIn
     {
         $fill = $this->getFillable();
         User::query()->findOrFail($fill['user_id']);
-        BankAccount::query()->findOrFail($fill['bank_id']);
+        Notification::query()->findOrFail($fill['notification_type_id']);
         $this->model::create($fill);
     }
 
@@ -49,8 +48,8 @@ class BankAccountService extends AbstractService implements BankAccountServiceIn
         if (array_key_exists('user_id', $fill)) {
             User::query()->findOrFail($fill['user_id']);
         }
-        if (array_key_exists('bank_id', $fill)) {
-            Bank::query()->findOrFail($fill['bank_id']);
+        if (array_key_exists('notification_type_id', $fill)) {
+            Notification::query()->findOrFail($fill['notification_type_id']);
         }
         $this->get()->update($fill);
     }
@@ -66,7 +65,7 @@ class BankAccountService extends AbstractService implements BankAccountServiceIn
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            throw new InvalidArgumentException('Error to delete back_account: ' . $e->getMessage(), 422);
+            throw new InvalidArgumentException('Error to delete notification: ' . $e->getMessage(), 422);
         }
     }
 }

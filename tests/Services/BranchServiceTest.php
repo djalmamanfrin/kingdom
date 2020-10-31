@@ -103,18 +103,6 @@ class BranchServiceTest extends TestCase
      * @dataProvider service
      * @param BranchServiceInterface $branch
      */
-    public function testExceptionIfBranchIdNotFound(BranchServiceInterface $branch)
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionCode(422);
-        $this->expectExceptionMessage('The branch not found');
-        $branch->setPrimaryKey(1000)->get();
-    }
-
-    /**
-     * @dataProvider service
-     * @param BranchServiceInterface $branch
-     */
     public function testIfTheMethodReturnIsAnBranchInstance(BranchServiceInterface $branch)
     {
         $id = Branch::pluck('id')->random();

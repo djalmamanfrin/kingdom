@@ -76,9 +76,9 @@ $factory->define(\App\Models\Category::class, function (Faker $faker) {
 $factory->define(\App\Models\Church::class, function (Faker $faker) {
     return [
         'branch_id' => \App\Models\Branch::pluck('id')->random(),
-        'address_id' => \App\Models\Address::pluck('id')->random(),
+        'address_id' => factory(\App\Models\Address::class, 1)->create()->get(0)->id,
         'name' => $faker->company,
-        'cnpj' => $faker->numerify('########0001##')
+        'cnpj' => $faker->unique()->numerify('########0001##')
     ];
 });
 

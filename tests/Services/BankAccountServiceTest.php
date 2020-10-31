@@ -38,29 +38,6 @@ class BankAccountServiceTest extends TestCase
         $this->assertInstanceOf(Bank::class, $bankAccountModel->bank());
     }
 
-    /**
-     * @dataProvider service
-     * @param BankAccountServiceInterface $bankAccount
-     */
-    public function testExceptionIfBankAccountIdNotFound(BankAccountServiceInterface $bankAccount)
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionCode(422);
-        $this->expectExceptionMessage('The bank account not found');
-        $bankAccount->setPrimaryKey(1000)->get();
-    }
-
-    /**
-     * @dataProvider service
-     * @param BankAccountServiceInterface $bankAccount
-     * @throws Exception
-     */
-    public function testDeleteAction(BankAccountServiceInterface $bankAccount) {
-        $id = BankAccount::pluck('id')->random();
-        $bankAccount->setPrimaryKey($id)->delete();
-        $this->expectNotToPerformAssertions();
-    }
-
     public function service(): array
     {
         return [

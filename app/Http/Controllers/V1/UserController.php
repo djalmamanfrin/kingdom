@@ -42,7 +42,7 @@ class UserController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $this->user->setFillable($request);
+            $this->user->setFillable($request->all());
             $this->user->store();
             return responseHandler()->success(Response::HTTP_CREATED);
         } catch (Throwable $e) {
@@ -53,7 +53,7 @@ class UserController extends Controller
     public function update($id, Request $request): JsonResponse
     {
         try {
-            $this->user->setFillable($request);
+            $this->user->setFillable($request->all());
             $this->user->setPrimaryKey($id)->update();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {

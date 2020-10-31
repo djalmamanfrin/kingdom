@@ -21,8 +21,8 @@ class Delivery extends Migration
             $table->timestamp('updated_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
-            $table->foreign('order_id')->references('id')->on('order');
-            $table->foreign('address_id')->references('id')->on('address');
+            $table->foreign('order_id')->references('id')->on('order')->onDelete('cascade');
+            $table->foreign('address_id')->references('id')->on('address')->onDelete('cascade');
         });
     }
 

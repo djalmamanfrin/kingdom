@@ -22,7 +22,7 @@ class ProjectController extends Controller
     public function index(): JsonResponse
     {
         try {
-            throw new InvalidArgumentException('Method not allowed');
+            throw new InvalidArgumentException('Method not allowed', 422);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
         }
@@ -41,7 +41,7 @@ class ProjectController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $this->project->setFillable($request);
+            $this->project->setFillable($request->all());
             $this->project->store();
             return responseHandler()->success(Response::HTTP_CREATED);
         } catch (Throwable $e) {
@@ -52,7 +52,7 @@ class ProjectController extends Controller
     public function update($id, Request $request): JsonResponse
     {
         try {
-            $this->project->setFillable($request);
+            $this->project->setFillable($request->all());
             $this->project->setPrimaryKey($id)->update();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {

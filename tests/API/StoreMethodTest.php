@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\API\BankAccountController;
+namespace Tests\API;
 
 use App\Models\BankAccount;
 use Symfony\Component\HttpFoundation\Response;
@@ -8,8 +8,6 @@ use Tests\TestCase;
 
 class StoreMethodTest extends TestCase
 {
-    private const URI = 'api/v1/bank-accounts/';
-
     public function testStoreBankAccount()
     {
         $payload = factory(BankAccount::class)->make()->toArray();

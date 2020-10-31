@@ -66,11 +66,84 @@ return [
         'messages' => [
             'branch_id.required' => 'The field branch_id must be informed',
             'branch_id.numeric' => 'The field branch_id must be numeric',
-            'project_type_id.required' => 'The field address_id must be informed',
-            'project_type_id.numeric' => 'The field address_id must be numeric',
+            'project_type_id.required' => 'The field project_type_id must be informed',
+            'project_type_id.numeric' => 'The field project_type_id must be numeric',
             'title.string' => 'The field title must be informed',
-            'title.numeric' => 'The field title must be numeric',
-            'title.between' => 'The field title must have a length between five and fifty character'
+            'title.numeric' => 'The field title must be string',
+            'title.between' => 'The field title must have a length between five and fifty characters'
+        ]
+    ],
+    'product' => [
+        'fields' => [
+            'user_id' => ['required', 'numeric'],
+            'category_id' => ['required', 'numeric'],
+            'title' => ['required', 'string', 'between:5,50'],
+            'description' => ['required', 'string', 'between:10,300'],
+        ],
+        'messages' => [
+            'user_id.required' => 'The field user_id must be informed',
+            'user_id.numeric' => 'The field user_id must be numeric',
+            'notification_type_id.required' => 'The field notification_type_id must be informed',
+            'notification_type_id.numeric' => 'The field notification_type_id must be numeric',
+            'title.string' => 'The field title must be informed',
+            'title.numeric' => 'The field title must be string',
+            'title.between' => 'The field title must have a length between five and fifty character',
+            'description.string' => 'The field description must be informed',
+            'description.numeric' => 'The field description must be string',
+            'description.between' => 'The field description must have a length between ten and three hundred characters'
+        ]
+    ],
+    'category' => [
+        'fields' => [
+            'name' => ['required', 'string', 'between:5,50'],
+            'description' => ['required', 'string', 'between:10,300'],
+        ],
+        'messages' => [
+            'title.string' => 'The field title must be informed',
+            'title.numeric' => 'The field title must be string',
+            'title.between' => 'The field title must have a length between five and fifty character',
+            'description.string' => 'The field description must be informed',
+            'description.numeric' => 'The field description must be string',
+            'description.between' => 'The field description must have a length between ten and three hundred characters'
+        ]
+    ],
+    'indication' => [
+        'fields' => [
+            'user_id' => ['required', 'numeric'],
+            'profile_id' => ['required', 'numeric'],
+            'name' => ['required', 'string'],
+            'email' => ['required', 'string', 'email']
+        ],
+        'messages' => [
+            'user_id.required' => 'The field user_id must be informed',
+            'user_id.numeric' => 'The field user_id must be numeric',
+            'profile_if.required' => 'The field profile_if must be informed',
+            'profile_if.numeric' => 'The field profile_if must be numeric',
+            'name.string' => 'The field name must be informed',
+            'name.numeric' => 'The field name must be numeric',
+            'email.required' => 'The field email must be informed',
+            'email.string' => 'The field email must be string',
+            'email.email' => 'The field email informed is invalid'
+        ]
+    ],
+    'notification' => [
+        'fields' => [
+            'user_id' => ['required', 'numeric'],
+            'notification_type_id' => ['required', 'numeric'],
+            'title' => ['required', 'string', 'between:5,50'],
+            'description' => ['required', 'string', 'between:10,300'],
+        ],
+        'messages' => [
+            'user_id.required' => 'The field user_id must be informed',
+            'user_id.numeric' => 'The field user_id must be numeric',
+            'notification_type_id.required' => 'The field notification_type_id must be informed',
+            'notification_type_id.numeric' => 'The field notification_type_id must be numeric',
+            'title.string' => 'The field title must be informed',
+            'title.numeric' => 'The field title must be string',
+            'title.between' => 'The field title must have a length between five and fifty character',
+            'description.string' => 'The field description must be informed',
+            'description.numeric' => 'The field description must be string',
+            'description.between' => 'The field description must have a length between ten and three hundred characters'
         ]
     ],
     'bank_account' => [
@@ -100,18 +173,6 @@ return [
             'type.required' => 'The field type must be informed',
             'type.numeric' => 'The field type must be numeric',
             'type.in' => 'The field type must be 1 or 2',
-        ],
-        'test' => [
-            'required' => [
-                ['user_id'],
-                ['agency'],
-                ['account'],
-                ['type'],
-                ['document']
-            ],
-            'numeric' => [],
-            'string' => [],
-            'exist' => [],
         ]
     ]
 ];

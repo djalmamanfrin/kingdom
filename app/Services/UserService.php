@@ -51,9 +51,6 @@ class UserService extends AbstractService implements UserServiceInterface
     public function store()
     {
         $fill = $this->getFillable();
-        if (!array_key_exists('email', $fill)) {
-            throw new InvalidArgumentException('Email must be inform to verify if the user was stored', 422);
-        }
         $this->isStored('email', $fill['email']);
         $this->model::create($fill);
     }

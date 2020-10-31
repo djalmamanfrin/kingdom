@@ -36,23 +36,10 @@ class ChurchService extends AbstractService implements ChurchServiceInterface
     public function store()
     {
         $fill = $this->getFillable();
-        if (! array_key_exists('cnpj', $fill)) {
-            $message = 'Cnpj must be informed to verify if the church was stored';
-            throw new InvalidArgumentException($message, 422);
-        }
         $this->isStored('cnpj', $fill['cnpj']);
-        if (! array_key_exists('branch_id', $fill)) {
-            $message = 'The branch_id field must be informed to verify if the branch exists';
-            throw new InvalidArgumentException($message, 422);
-        }
         $this->isStored('branch_id', $fill['branch_id']);
-
-        if (! array_key_exists('address_id', $fill)) {
-            $message = 'The address_id field must be informed to verify if the address exists';
-            throw new InvalidArgumentException($message, 422);
-        }
-        $errorMessage = 'Address_id is stored another church';
-        $this->isStored('address_id', $fill['address_id'], $errorMessage);
+        Address::query()->findOrFail($fill['address_id']);
+        $this->isStored('address_id', $fill['address_id'], 'Address_id is stored another church');
         $this->model::create($fill);
     }
 

@@ -3,34 +3,37 @@
 namespace App\Services;
 
 use App\Models\Bank;
-use App\Models\BankAccount;
+use App\Models\Branch;
+use App\Models\Indication;
+use App\Models\Notification;
+use App\Models\Profile;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
-class BankAccountService extends AbstractService implements BankAccountServiceInterface
+class IndicationService extends AbstractService implements IndicationServiceInterface
 {
     public function __construct()
     {
-        parent::__construct(new BankAccount());
+        parent::__construct(new Indication());
     }
 
-    public function setPrimaryKeys(array $ids): BankAccountService
+    public function setPrimaryKeys(array $ids): IndicationService
     {
         parent::setPrimaryKeys($ids);
         return $this;
     }
 
-    public function setPrimaryKey(int $id): BankAccountService
+    public function setPrimaryKey(int $id): IndicationService
     {
         parent::setPrimaryKey($id);
         return $this;
     }
 
-    public function get(): BankAccount
+    public function get(): Indication
     {
-        /** @var BankAccount $project */
+        /** @var Indication $project */
         $project = parent::get();
         return $project;
     }
@@ -39,7 +42,7 @@ class BankAccountService extends AbstractService implements BankAccountServiceIn
     {
         $fill = $this->getFillable();
         User::query()->findOrFail($fill['user_id']);
-        BankAccount::query()->findOrFail($fill['bank_id']);
+        Profile::query()->findOrFail($fill['profile_id']);
         $this->model::create($fill);
     }
 
@@ -49,8 +52,8 @@ class BankAccountService extends AbstractService implements BankAccountServiceIn
         if (array_key_exists('user_id', $fill)) {
             User::query()->findOrFail($fill['user_id']);
         }
-        if (array_key_exists('bank_id', $fill)) {
-            Bank::query()->findOrFail($fill['bank_id']);
+        if (array_key_exists('profile_id', $fill)) {
+            Notification::query()->findOrFail($fill['profile_id']);
         }
         $this->get()->update($fill);
     }
@@ -66,7 +69,7 @@ class BankAccountService extends AbstractService implements BankAccountServiceIn
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            throw new InvalidArgumentException('Error to delete back_account: ' . $e->getMessage(), 422);
+            throw new InvalidArgumentException('Error to delete indication: ' . $e->getMessage(), 422);
         }
     }
 }

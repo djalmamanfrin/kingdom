@@ -30,9 +30,4 @@ class BankCardService extends AbstractService implements BankCardServiceInterfac
         $bankCard = parent::get();
         return $bankCard;
     }
-
-    public function byUserId(int $id): Collection
-    {
-        return $this->model->bankCards()->where('user_id', $id)->get();
-    }
 }

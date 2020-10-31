@@ -91,33 +91,10 @@ class ChurchServiceTest extends TestCase
      * @dataProvider service
      * @param ChurchServiceInterface $church
      */
-    public function testExceptionIfChurchIdNotFound(ChurchServiceInterface $church)
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionCode(422);
-        $this->expectExceptionMessage('The church not found');
-        $church->setPrimaryKey(1000)->get();
-    }
-
-    /**
-     * @dataProvider service
-     * @param ChurchServiceInterface $church
-     */
     public function testIfTheMethodReturnIsAnChurchInstance(ChurchServiceInterface $church)
     {
         $churchModel = $church->setPrimaryKey(1)->get();
         $this->assertInstanceOf(Church::class, $churchModel);
-    }
-
-    /**
-     * @dataProvider service
-     * @param ChurchServiceInterface $church
-     * @throws Exception
-     */
-    public function testExceptionIfHaveOneOrMoreRelationshipInDeleteAction(ChurchServiceInterface $church) {
-        $id = Church::pluck('id')->random();
-        $church->setPrimaryKey($id)->delete();
-        $this->expectNotToPerformAssertions();
     }
 
     public function service(): array

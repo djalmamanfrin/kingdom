@@ -11,7 +11,7 @@ interface ProjectServiceInterface
 {
     public function setPrimaryKey(int $id): ProjectService;
     public function setPrimaryKeys(array $ids): ProjectService;
-    public function setFillable(Request $request);
+    public function setFillable(array $params);
     public function get(): Project;
     public function all(): LengthAwarePaginator;
     public function products(): Collection;

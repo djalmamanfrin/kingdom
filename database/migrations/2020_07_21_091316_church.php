@@ -13,7 +13,7 @@ class Church extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('branch_id');
-            $table->unsignedInteger('address_id');
+            $table->unsignedInteger('address_id')->unique();
             $table->string('name')->nullable();
             $table->char('cnpj', 14)->unique();
             $table->timestamp('created_at')

@@ -22,7 +22,7 @@ class ChurchController extends Controller
     public function index(): JsonResponse
     {
         try {
-            throw new InvalidArgumentException('Method not allowed');
+            throw new InvalidArgumentException('Method not allowed', 422);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
         }
@@ -41,7 +41,7 @@ class ChurchController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            $this->church->setFillable($request);
+            $this->church->setFillable($request->all());
             $this->church->store();
             return responseHandler()->success(Response::HTTP_CREATED);
         } catch (Throwable $e) {
@@ -52,7 +52,7 @@ class ChurchController extends Controller
     public function update($id, Request $request): JsonResponse
     {
         try {
-            $this->church->setFillable($request);
+            $this->church->setFillable($request->all());
             $this->church->setPrimaryKey($id)->update();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {
