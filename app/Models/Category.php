@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Category extends Model
 {
@@ -12,8 +13,8 @@ class Category extends Model
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['name', 'description'];
 
-    public function products()
+    public function company(): Collection
     {
-        return $this->hasMany('App\Product', 'product_id');
+        return $this->hasMany(Company::class)->get();
     }
 }

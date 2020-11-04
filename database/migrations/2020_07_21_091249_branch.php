@@ -12,7 +12,7 @@ class Branch extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('responsible_id');
             $table->string('name')->nullable();
             $table->string('email');
             $table->string('site')->nullable();
@@ -21,7 +21,7 @@ class Branch extends Migration
             $table->timestamp('updated_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('responsible_id')->references('id')->on('responsible');
         });
     }
 

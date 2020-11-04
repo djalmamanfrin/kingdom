@@ -5,19 +5,20 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class Profile extends Migration
+class Entrepreneur extends Migration
 {
-    private $table = 'profile';
+    private $table = 'entrepreneur';
     public function up()
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->mediumText('description');
+            $table->unsignedInteger('user_id');
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+
+            $table->foreign('user_id')->references('id')->on('user');
         });
     }
 

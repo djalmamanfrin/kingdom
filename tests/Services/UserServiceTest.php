@@ -2,7 +2,7 @@
 
 namespace Tests\Services;
 
-use App\Models\Profile;
+use App\Models\Member;
 use App\Models\User;
 use App\Services\UserService;
 use App\Services\UserServiceInterface;
@@ -109,7 +109,7 @@ class UserServiceTest extends TestCase
     {
         $id = User::pluck('id')->random();
         $profileModel = $user->setPrimaryKey($id)->get()->profile();
-        $this->assertInstanceOf(Profile::class, $profileModel);
+        $this->assertInstanceOf(Member::class, $profileModel);
     }
 
     public function service(): array

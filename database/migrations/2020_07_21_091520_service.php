@@ -5,22 +5,23 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class Indication extends Migration
+class Service extends Migration
 {
-    private $table = 'indication';
+    private $table = 'service';
     public function up()
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('company_id');
+            $table->boolean('is_active')->default(0);
             $table->string('name');
-            $table->string('email');
+            $table->mediumText('description');
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('company_id')->references('id')->on('company');
         });
     }
 

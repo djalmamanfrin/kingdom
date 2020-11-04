@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Indication extends Model
+class Entrepreneur extends Model
 {
-    protected $table = 'indication';
+    protected $table = 'entrepreneur';
     protected $primaryKey = 'id';
-    public $timestamps = false;
-    protected $casts = ['date' => 'Timestamp'];
-    protected $fillable = ['user_id', 'name', 'email'];
+    protected $fillable = ['user_id'];
 
     public function user(): User
     {

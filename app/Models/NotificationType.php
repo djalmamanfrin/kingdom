@@ -12,8 +12,8 @@ class NotificationType extends Model
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['name', 'description'];
 
-    public function notifications()
+    public function notifications(): Notification
     {
-        return $this->belongsToMany('App\Notification', 'notification_id');
+        return $this->belongsToMany(Notification::class)->get()->first();
     }
 }

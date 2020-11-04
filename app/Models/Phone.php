@@ -12,13 +12,13 @@ class Phone extends Model
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['user_id', 'country', 'number'];
 
-    public function user()
+    public function user(): User
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class)->get()->first();
     }
 
-    public function country()
+    public function country(): Country
     {
-        return $this->belongsTo('App\Country', 'country_id');
+        return $this->belongsTo(Country::class)->get()->first();
     }
 }

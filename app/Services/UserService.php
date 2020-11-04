@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Profile;
+use App\Models\Member;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use \Illuminate\Support\Collection;

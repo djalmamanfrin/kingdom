@@ -5,16 +5,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class Indication extends Migration
+class Responsible extends Migration
 {
-    private $table = 'indication';
+    private $table = 'responsible';
     public function up()
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->string('name');
-            $table->string('email');
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')

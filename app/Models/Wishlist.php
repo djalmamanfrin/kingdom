@@ -4,21 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class Wishlist extends Model
 {
-    protected $table = 'notification';
+    protected $table = 'wishlist';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $casts = ['date' => 'Timestamp'];
-    protected $fillable = ['user_id', 'notification_id', 'type', 'title', 'description', 'is_read'];
+    protected $fillable = ['user_id', 'service_id'];
 
     public function user(): User
     {
         return $this->belongsTo(User::class)->get()->first();
     }
 
-    public function notificationType(): NotificationType
+    public function service(): Service
     {
-        return $this->hasOne(NotificationType::class)->get()->first();
+        return $this->belongsTo(Service::class)->get()->first();
     }
 }

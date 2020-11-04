@@ -12,8 +12,8 @@ class State extends Model
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['country_id', 'name', 'code'];
 
-    public function country()
+    public function country(): Country
     {
-        return $this->belongsTo('App\Country', 'country_id');
+        return $this->belongsTo(Country::class)->get()->first();
     }
 }

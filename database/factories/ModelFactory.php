@@ -6,13 +6,30 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Models\User::class, function (Faker $faker) {
     return [
-        'profile_id' => $faker->randomElement([1, 2, 3]),
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => $faker->password,
-        'is_member' => $faker->boolean(50),
+        'is_admin' => $faker->boolean(500),
         'rg' => $faker->numerify('#########'),
         'cpf' => $faker->numerify('###########')
+    ];
+});
+
+$factory->define(\App\Models\Member::class, function (Faker $faker) {
+    return [
+        'user_id' => factory(\App\Models\User::class, 1)->create()->get(0)->id,
+    ];
+});
+
+$factory->define(\App\Models\Entrepreneur::class, function (Faker $faker) {
+    return [
+        'user_id' => factory(\App\Models\User::class, 1)->create()->get(0)->id,
+    ];
+});
+
+$factory->define(\App\Models\Responsible::class, function (Faker $faker) {
+    return [
+        'user_id' => factory(\App\Models\User::class, 1)->create()->get(0)->id,
     ];
 });
 
@@ -44,7 +61,7 @@ $factory->define(\App\Models\Address::class, function (Faker $faker) {
 
 $factory->define(\App\Models\Branch::class, function (Faker $faker) {
     return [
-        'user_id' => \App\Models\User::pluck('id')->random(),
+        'responsible_id' => \App\Models\Responsible::pluck('id')->random(),
         'name' => $faker->company,
         'email' => $faker->companyEmail,
         'site' => 'https://xpto.com.br'
@@ -76,6 +93,16 @@ $factory->define(\App\Models\Category::class, function (Faker $faker) {
 $factory->define(\App\Models\Church::class, function (Faker $faker) {
     return [
         'branch_id' => \App\Models\Branch::pluck('id')->random(),
+        'address_id' => factory(\App\Models\Address::class, 1)->create()->get(0)->id,
+        'name' => $faker->company,
+        'cnpj' => $faker->unique()->numerify('########0001##')
+    ];
+});
+
+$factory->define(\App\Models\Company::class, function (Faker $faker) {
+    return [
+        'entrepreneur_id' => \App\Models\Entrepreneur::pluck('id')->random(),
+        'category_id' => \App\Models\Category::pluck('id')->random(),
         'address_id' => factory(\App\Models\Address::class, 1)->create()->get(0)->id,
         'name' => $faker->company,
         'cnpj' => $faker->unique()->numerify('########0001##')
@@ -137,7 +164,6 @@ $factory->define(\App\Models\ProjectType::class, function (Faker $faker) {
 $factory->define(\App\Models\Indication::class, function (Faker $faker) {
     return [
         'user_id' => \App\Models\User::pluck('id')->random(),
-        'profile_id' => $faker->randomElement([1, 2, 3]),
         'name' => $faker->name,
         'email' => $faker->email,
     ];
@@ -145,12 +171,20 @@ $factory->define(\App\Models\Indication::class, function (Faker $faker) {
 
 $factory->define(\App\Models\Product::class, function (Faker $faker) {
     return [
-        'user_id' => \App\Models\User::pluck('id')->random(),
-        'category_id' => \App\Models\Category::pluck('id')->random(),
-        'is_service' => $faker->boolean(90),
+        'company_id' => \App\Models\Company::pluck('id')->random(),
         'is_active' => $faker->boolean(90),
         'value' => $faker->randomNumber(2),
         'quantity' => $faker->randomNumber(1)
+    ];
+});
+
+$factory->define(\App\Models\Service::class, function (Faker $faker) {
+    $qtd = $faker->randomElement([1, 3, 5, 7]);
+    return [
+        'company_id' => \App\Models\Company::pluck('id')->random(),
+        'is_active' => $faker->boolean(90),
+        'name' => $faker->text(45),
+        'description' => implode('. ', $faker->paragraphs($qtd))
     ];
 });
 
@@ -217,5 +251,12 @@ $factory->define(\App\Models\ProjectItem::class, function (Faker $faker) {
     return [
         'project_id' => \App\Models\Project::pluck('id')->random(),
         'product_id' => \App\Models\Product::pluck('id')->random(),
+    ];
+});
+
+$factory->define(\App\Models\Wishlist::class, function (Faker $faker) {
+    return [
+        'user_id' => \App\Models\User::pluck('id')->random(),
+        'service_id' => \App\Models\Service::pluck('id')->random(),
     ];
 });

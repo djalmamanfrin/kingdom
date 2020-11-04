@@ -12,8 +12,8 @@ class City extends Model
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['state_id', 'name'];
 
-    public function state()
+    public function state(): State
     {
-        return $this->belongsTo('App\Stage', 'state_id');
+        return $this->belongsTo(State::class)->get()->first();
     }
 }

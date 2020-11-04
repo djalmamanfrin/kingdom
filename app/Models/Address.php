@@ -12,14 +12,14 @@ class Address extends Model
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['user_id', 'city_id', 'street', 'number', 'zipcode'];
 
-    public function user()
+    public function user(): User
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class)->get()->first();
     }
 
-    public function city()
+    public function city(): City
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class)->get()->first();
     }
 
     public function church(): array

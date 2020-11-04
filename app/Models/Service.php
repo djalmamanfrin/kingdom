@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Indication extends Model
+class Service extends Model
 {
-    protected $table = 'indication';
+    protected $table = 'service';
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $casts = ['date' => 'Timestamp'];
-    protected $fillable = ['user_id', 'name', 'email'];
+    protected $fillable = ['company_id', 'name', 'description', 'is_active'];
 
-    public function user(): User
+    public function company(): Company
     {
         return $this->belongsTo(User::class)->get()->first();
     }

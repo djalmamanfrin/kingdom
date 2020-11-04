@@ -31,7 +31,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(UserServiceInterface::class, UserService::class);
-        $this->app->bind(ProfileServiceInterface::class, ProfileService::class);
         $this->app->bind(BranchServiceInterface::class, BranchService::class);
         $this->app->bind(ChurchServiceInterface::class, ChurchService::class);
         $this->app->bind(BankCardServiceInterface::class, BankCardService::class);

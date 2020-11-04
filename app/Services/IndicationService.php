@@ -6,7 +6,7 @@ use App\Models\Bank;
 use App\Models\Branch;
 use App\Models\Indication;
 use App\Models\Notification;
-use App\Models\Profile;
+use App\Models\Member;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +42,7 @@ class IndicationService extends AbstractService implements IndicationServiceInte
     {
         $fill = $this->getFillable();
         User::query()->findOrFail($fill['user_id']);
-        Profile::query()->findOrFail($fill['profile_id']);
+        Member::query()->findOrFail($fill['profile_id']);
         $this->model::create($fill);
     }
 
