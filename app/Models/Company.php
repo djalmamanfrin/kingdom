@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Company extends Model
 {
@@ -25,5 +26,15 @@ class Company extends Model
     public function address(): Address
     {
         return $this->belongsTo(Address::class)->get()->first();
+    }
+
+    public function services(): Collection
+    {
+        return $this->hasMany(Service::class)->get();
+    }
+
+    public function products(): Collection
+    {
+        return $this->hasMany(Product::class)->get();
     }
 }

@@ -14,4 +14,11 @@ class Entrepreneur extends Model
     {
         return $this->belongsTo(User::class)->get()->first();
     }
+
+    public function toArray(): array
+    {
+        $model = parent::toArray();
+        $model['name'] = $this->getTable();
+        return $model;
+    }
 }

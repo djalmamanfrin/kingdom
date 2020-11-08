@@ -10,11 +10,8 @@ use InvalidArgumentException;
 
 class UserService extends AbstractService implements UserServiceInterface
 {
-    private ProfileServiceInterface $profile;
-
-    public function __construct(ProfileServiceInterface $profile) {
+    public function __construct() {
         parent::__construct(new User());
-        $this->profile = $profile;
     }
 
     public function setPrimaryKeys(array $ids): UserService
@@ -33,7 +30,7 @@ class UserService extends AbstractService implements UserServiceInterface
     {
         /** @var User $user */
         $user = parent::get();
-        $user->profile =  $user->profile()->name;
+        $user->profile =  $user->profile();
         return $user;
     }
 

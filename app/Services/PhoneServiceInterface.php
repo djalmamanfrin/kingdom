@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use App\Models\Phone;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-interface UserServiceInterface
+interface PhoneServiceInterface
 {
-    public function setPrimaryKey(int $id): UserService;
-    public function setPrimaryKeys(array $ids): UserService;
-    public function get(): User;
+    public function setPrimaryKey(int $id): PhoneService;
+    public function setPrimaryKeys(array $ids): PhoneService;
     public function setFillable(array $params);
+    public function get(): Phone;
     public function all(): LengthAwarePaginator;
     public function store();
     public function update();

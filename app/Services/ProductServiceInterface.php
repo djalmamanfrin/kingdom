@@ -12,4 +12,7 @@ interface ProductServiceInterface
     public function setFillable(array $params);
     public function get(): Product;
     public function all(): LengthAwarePaginator;
+    public function store();
+    public function update();
+    public function delete();
 }

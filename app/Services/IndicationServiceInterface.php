@@ -12,4 +12,7 @@ interface IndicationServiceInterface
     public function setFillable(array $params);
     public function get(): Indication;
     public function all(): LengthAwarePaginator;
+    public function store();
+    public function update();
+    public function delete();
 }

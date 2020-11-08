@@ -56,27 +56,4 @@ class ProjectService extends AbstractService implements ProjectServiceInterface
         }
         $this->get()->update($fill);
     }
-
-    /**
-     * @throws Exception
-     */
-    public function delete()
-    {
-        try {
-            DB::beginTransaction();
-            $this->get()->delete();
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw new InvalidArgumentException('Error to delete project: ' . $e->getMessage(), 422);
-        }
-    }
-
-    public function products(): Collection
-    {
-        $items = $this->get()->items();
-        return $items->map(function ($item) {
-            return $item->product()->projectView();
-        });
-    }
 }

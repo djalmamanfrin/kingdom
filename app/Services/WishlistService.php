@@ -2,33 +2,33 @@
 
 namespace App\Services;
 
-use App\Models\Indication;
+use App\Models\Wishlist;
 use App\Models\User;
 
-class IndicationService extends AbstractService implements IndicationServiceInterface
+class WishlistService extends AbstractService implements WishlistServiceInterface
 {
     public function __construct()
     {
-        parent::__construct(new Indication());
+        parent::__construct(new Wishlist());
     }
 
-    public function setPrimaryKeys(array $ids): IndicationService
+    public function setPrimaryKeys(array $ids): WishlistService
     {
         parent::setPrimaryKeys($ids);
         return $this;
     }
 
-    public function setPrimaryKey(int $id): IndicationService
+    public function setPrimaryKey(int $id): WishlistService
     {
         parent::setPrimaryKey($id);
         return $this;
     }
 
-    public function get(): Indication
+    public function get(): Wishlist
     {
-        /** @var Indication $indication */
-        $indication = parent::get();
-        return $indication;
+        /** @var Wishlist $wishlist */
+        $wishlist = parent::get();
+        return $wishlist;
     }
 
     public function store()

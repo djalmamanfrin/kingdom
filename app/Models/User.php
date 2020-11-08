@@ -22,6 +22,21 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['church_id', 'name', 'email', 'password', 'is_member', 'rg', 'cpf'];
 
+    public function profile(): array
+    {
+        $profile = $this->hasOne(Member::class)->first();
+        if (is_null($profile)) {
+            $profile = $this->hasOne(Entrepreneur::class)->first();
+        }
+        if (is_null($profile)) {
+            $profile = $this->hasOne(Responsible::class)->first();
+        }
+        if (is_null($profile)) {
+            $profile = Member::create(['user_id' => $this->id]);
+        }
+        return $profile->toArray();
+    }
+
     /**
      * @throws InvalidArgumentException
      */

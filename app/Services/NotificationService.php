@@ -4,9 +4,6 @@ namespace App\Services;
 
 use App\Models\Notification;
 use App\Models\User;
-use Exception;
-use Illuminate\Support\Facades\DB;
-use InvalidArgumentException;
 
 class NotificationService extends AbstractService implements NotificationServiceInterface
 {
@@ -29,9 +26,9 @@ class NotificationService extends AbstractService implements NotificationService
 
     public function get(): Notification
     {
-        /** @var Notification $project */
-        $project = parent::get();
-        return $project;
+        /** @var Notification $notification */
+        $notification = parent::get();
+        return $notification;
     }
 
     public function store()
@@ -52,20 +49,5 @@ class NotificationService extends AbstractService implements NotificationService
             Notification::query()->findOrFail($fill['notification_type_id']);
         }
         $this->get()->update($fill);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function delete()
-    {
-        try {
-            DB::beginTransaction();
-            $this->get()->delete();
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw new InvalidArgumentException('Error to delete notification: ' . $e->getMessage(), 422);
-        }
     }
 }

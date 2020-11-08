@@ -12,4 +12,7 @@ interface NotificationServiceInterface
     public function setFillable(array $params);
     public function get(): Notification;
     public function all(): LengthAwarePaginator;
+    public function store();
+    public function update();
+    public function delete();
 }

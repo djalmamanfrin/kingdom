@@ -14,5 +14,7 @@ interface ProjectServiceInterface
     public function setFillable(array $params);
     public function get(): Project;
     public function all(): LengthAwarePaginator;
-    public function products(): Collection;
+    public function store();
+    public function update();
+    public function delete();
 }

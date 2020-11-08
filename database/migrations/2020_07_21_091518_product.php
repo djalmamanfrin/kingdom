@@ -21,7 +21,7 @@ class Product extends Migration
             $table->timestamp('updated_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
 
-            $table->foreign('company_id')->references('id')->on('company');
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
         });
     }
 
