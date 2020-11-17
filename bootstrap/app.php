@@ -69,6 +69,7 @@ $app->configure('dictionaries/bank_accounts');
 $app->configure('dictionaries/profile');
 $app->configure('dictionaries/branch');
 $app->configure('dictionaries/user');
+$app->configure('dictionaries/auth');
 $app->configure('validate_middleware');
 // Monta dinamicamente os arquivos de configuração da pasta dictionaries
 // foreach (glob(__DIR__ . '/../config/dictionaries/*.php') as $config) {
@@ -93,7 +94,7 @@ $app->middleware([
 
 $app->routeMiddleware([
     'validate_field' => \App\Http\Middleware\ValidateFieldMiddleware::class,
-    // 'auth' => App\Http\Middleware\V1\Kerberos\AuthMiddleware::class,
+    'auth' => App\Http\Middleware\Authenticate::class,
     // 'can' => App\Http\Middleware\V1\Kerberos\TicketsMiddleware::class,
 ]);
 
@@ -109,7 +110,7 @@ $app->routeMiddleware([
 */
 
 $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*

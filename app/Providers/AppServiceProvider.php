@@ -18,8 +18,6 @@ use App\Services\NotificationService;
 use App\Services\NotificationServiceInterface;
 use App\Services\ProductService;
 use App\Services\ProductServiceInterface;
-use App\Services\ProfileService;
-use App\Services\ProfileServiceInterface;
 use App\Services\ProjectService;
 use App\Services\ProjectServiceInterface;
 use App\Services\UserService;

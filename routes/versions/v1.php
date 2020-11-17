@@ -1,8 +1,12 @@
 <?php
 /** @var \Laravel\Lumen\Routing\Router $router */
 $router->group(['prefix' => 'v1', 'namespace' => 'V1'], function () use ($router) {
-
-    $router->group(['prefix' => 'users'], function () use ($router) {
+    $router->post('/login', [
+        'as' => 'auth.login',
+        'validate' => 'auth',
+        'middleware' => 'validate_field',
+        'uses' => 'AuthController@create']);
+    $router->group(['prefix' => 'users', 'middleware' => 'auth'], function () use ($router) {
         $router->get('/', ['as' => 'user.get', 'uses' => 'UserController@index']);
         $router->post('/', [
             'validate' => 'user',

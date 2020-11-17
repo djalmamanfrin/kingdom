@@ -8,14 +8,14 @@ return [
             'description' => 'Número identificador na base de dados'
         ],
         [
-            'text' => 'Título do perfil',
-            'value' => 'name',
-            'description' => 'Descrição em uma palavra do tipo do perfil'
+            'text' => 'Id Usuário',
+            'value' => 'user_id',
+            'description' => 'Número identificador do usuário na base de dados'
         ],
         [
-            'text' => 'Descrição do Perfil',
-            'value' => 'description',
-            'description' => 'Texto explicativo do título do perfil'
+            'text' => 'Tipo do Usuário',
+            'value' => 'name',
+            'description' => 'Tipo do usuário na aplicação'
         ],
         [
             'text' => 'Criado Em',

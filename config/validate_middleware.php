@@ -3,10 +3,22 @@
 use Illuminate\Validation\Rule;
 
 return [
+    'auth' => [
+        'fields' => [
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string']
+        ],
+        'messages' => [
+            'email.required' => 'The field email must be informed',
+            'email.string' => 'The field email must be string',
+            'email.email' => 'The field email informed is invalid',
+            'password.required' => 'The field password must be informed',
+            'password.string' => 'The field password must be string',
+        ]
+    ],
     'user' => [
         'fields' => [
             'name' => ['required', 'string'],
-            'profile_id' => ['required', 'numeric'],
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
             'rg' => ['required', 'string'],
@@ -15,8 +27,6 @@ return [
         'messages' => [
             'name.required' => 'The field name must be informed',
             'name.string' => 'The field name must be string',
-            'profile_id.required' => 'The field profile_id must be informed',
-            'profile_id.numeric' => 'The field profile_id must be numeric',
             'email.required' => 'The field email must be informed',
             'email.string' => 'The field email must be string',
             'email.email' => 'The field email informed is invalid',

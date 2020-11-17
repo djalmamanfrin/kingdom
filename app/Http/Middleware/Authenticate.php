@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use InvalidArgumentException;
 
 class Authenticate
 {
@@ -36,9 +37,9 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
+            $exception = new InvalidArgumentException('Unauthorized.', 401);
+            return responseHandler()->error($exception);
         }
-
         return $next($request);
     }
 }
