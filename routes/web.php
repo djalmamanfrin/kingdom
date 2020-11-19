@@ -6,5 +6,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         return ['status' => true, 'message' => "I'm Alivess"];
     });
 
-    include('versions/v1.php');
+    $router->post('/login', [
+        'as' => 'auth.login',
+        'validate' => 'auth',
+        'middleware' => 'validate_field',
+        'uses' => 'AuthController@create']);
+
+    include('v1/v1.php');
 });
