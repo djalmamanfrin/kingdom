@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Profile\ProfileInterface;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -22,31 +23,20 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['church_id', 'name', 'email', 'password', 'is_member', 'rg', 'cpf'];
 
-    public function profile(): array
+    public function profile(): ProfileInterface
     {
-        $profile = $this->hasOne(Member::class)->first();
+        /** @var  ProfileInterface $profile */
+        $profile = $this->hasOne(Responsible::class)->first();
         if (is_null($profile)) {
             $profile = $this->hasOne(Entrepreneur::class)->first();
         }
         if (is_null($profile)) {
-            $profile = $this->hasOne(Responsible::class)->first();
+            $profile = $this->hasOne(Member::class)->first();
         }
         if (is_null($profile)) {
             $profile = Member::create(['user_id' => $this->id]);
         }
-        return $profile->toArray();
-    }
-
-    /**
-     * @throws InvalidArgumentException
-     */
-    public function church(): Church
-    {
-        $collection = $this->belongsTo(Church::class)->get();
-        if ($collection->isEmpty()) {
-            throw new InvalidArgumentException('This user is not member any church');
-        }
-        return $collection->first();
+        return $profile;
     }
 
     public function addresses(): Collection

@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Profile\ProfileInterface;
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
-class Member extends Model
+class Member extends Model implements ProfileInterface
 {
+    const TYPE = 'member';
     protected $table = 'member';
     protected $primaryKey = 'id';
+    public $timestamps = false;
+    protected $casts = ['date' => 'Timestamp'];
     protected $fillable = ['user_id'];
 
     public function user(): User
@@ -15,10 +20,23 @@ class Member extends Model
         return $this->belongsTo(User::class)->get()->first();
     }
 
-    public function toArray(): array
+    public function getId():int
     {
-        $model = parent::toArray();
-        $model['name'] = $this->getTable();
-        return $model;
+        return $this->id;
+    }
+
+    public function type(): string
+    {
+        return $this->getTable();
+    }
+
+    public function getUpdateAt(): DateTime
+    {
+        return $this->update_at;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->created_at;
     }
 }
