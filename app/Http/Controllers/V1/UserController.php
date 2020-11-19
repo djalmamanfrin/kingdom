@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Entrepreneur;
+use App\Models\Responsible;
 use App\Services\UserServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use InvalidArgumentException;
 use Throwable;
 
 class UserController extends Controller
@@ -18,21 +22,11 @@ class UserController extends Controller
         $this->user = $user;
     }
 
-    public function index(): JsonResponse
-    {
-        try {
-            $users = $this->user->all();
-            return responseHandler()->success(Response::HTTP_OK, $users);
-        } catch (Throwable $e) {
-            return responseHandler()->error($e);
-        }
-
-    }
-
     public function get(int $id): JsonResponse
     {
         try {
             $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
             return responseHandler()->success(Response::HTTP_OK, $user);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -54,7 +48,9 @@ class UserController extends Controller
     {
         try {
             $this->user->setFillable($request->all());
-            $this->user->setPrimaryKey($id)->update();
+            $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
+            $user->update();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -64,7 +60,9 @@ class UserController extends Controller
     public function delete($id): JsonResponse
     {
         try {
-            $this->user->setPrimaryKey($id)->get()->delete();
+            $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
+            $user->delete();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -74,7 +72,9 @@ class UserController extends Controller
     public function profile($id): JsonResponse
     {
         try {
-            $profile = $this->user->setPrimaryKey($id)->get()->profile();
+            $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
+            $profile = $user->profile();
             return responseHandler()->success(Response::HTTP_OK, $profile);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -84,28 +84,30 @@ class UserController extends Controller
     public function branches(int $id): JsonResponse
     {
         try {
-            $branches = $this->user->setPrimaryKey($id)->get()->branches();
+            $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
+            $this->authorize('responsible');
+
+            /** @var Responsible $responsible */
+            $responsible = $user->profile();
+            $branches = $responsible->branches();
             return responseHandler()->success(Response::HTTP_OK, $branches);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
         }
     }
 
-    public function bankCards(int $id): JsonResponse
+    public function companies(int $id): JsonResponse
     {
         try {
-            $bankCards = $this->user->setPrimaryKey($id)->get()->bankCards();
-            return responseHandler()->success(Response::HTTP_OK, $bankCards);
-        } catch (Throwable $e) {
-            return responseHandler()->error($e);
-        }
-    }
+            $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
+            $this->authorize('entrepreneur');
 
-    public function bankAccounts(int $id): JsonResponse
-    {
-        try {
-            $bankAccount = $this->user->setPrimaryKey($id)->get()->bankAccounts()->get();
-            return responseHandler()->success(Response::HTTP_OK, $bankAccount);
+            /** @var Entrepreneur $entrepreneur */
+            $entrepreneur = $user->profile();
+            $companies = $entrepreneur->companies();
+            return responseHandler()->success(Response::HTTP_OK, $companies);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
         }
@@ -114,8 +116,9 @@ class UserController extends Controller
     public function addresses(int $id): JsonResponse
     {
         try {
-            $addresses = $this->user->setPrimaryKey($id)->get()->addresses();
-            $dict = config('dictionaries.user.bank_cards');
+            $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
+            $addresses = $user->addresses();
             return responseHandler()->success(Response::HTTP_OK, $addresses);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -125,7 +128,9 @@ class UserController extends Controller
     public function indications(int $id): JsonResponse
     {
         try {
-            $indications = $this->user->setPrimaryKey($id)->get()->indications();
+            $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
+            $indications = $user->indications();
             return responseHandler()->success(Response::HTTP_OK, $indications);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -135,7 +140,9 @@ class UserController extends Controller
     public function notifications(int $id): JsonResponse
     {
         try {
-            $notifications = $this->user->setPrimaryKey($id)->get()->notifications();
+            $user = $this->user->setPrimaryKey($id)->get();
+            $this->authorize('access', $user);
+            $notifications = $user->notifications();
             return responseHandler()->success(Response::HTTP_OK, $notifications);
         } catch (Throwable $e) {
             return responseHandler()->error($e);

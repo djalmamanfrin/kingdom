@@ -7,7 +7,6 @@ use App\Services\ChurchServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use InvalidArgumentException;
 use Throwable;
 
 class ChurchController extends Controller
@@ -16,22 +15,15 @@ class ChurchController extends Controller
 
     public function __construct(ChurchServiceInterface $church)
     {
+        $this->authorize('responsible');
         $this->church = $church;
-    }
-
-    public function index(): JsonResponse
-    {
-        try {
-            throw new InvalidArgumentException('Method not allowed', 422);
-        } catch (Throwable $e) {
-            return responseHandler()->error($e);
-        }
     }
 
     public function get(int $id): JsonResponse
     {
         try {
             $church = $this->church->setPrimaryKey($id)->get();
+            $this->authorize('access', $church);
             return responseHandler()->success(Response::HTTP_OK, $church);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -53,7 +45,9 @@ class ChurchController extends Controller
     {
         try {
             $this->church->setFillable($request->all());
-            $this->church->setPrimaryKey($id)->update();
+            $church = $this->church->setPrimaryKey($id)->get();
+            $this->authorize('access', $church);
+            $church->update();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -63,7 +57,9 @@ class ChurchController extends Controller
     public function delete($id): JsonResponse
     {
         try {
-            $this->church->setPrimaryKey($id)->delete();
+            $church = $this->church->setPrimaryKey($id)->get();
+            $this->authorize('access', $church);
+            $church->delete();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -73,8 +69,9 @@ class ChurchController extends Controller
     public function address(int $id): JsonResponse
     {
         try {
-            $churchModel = $this->church->setPrimaryKey($id)->get();
-            $address = $churchModel->address()->church();
+            $church = $this->church->setPrimaryKey($id)->get();
+            $this->authorize('access', $church);
+            $address = $church->address();
             return responseHandler()->success(Response::HTTP_OK, $address);
         } catch (Throwable $e) {
             return responseHandler()->error($e);

@@ -19,15 +19,6 @@ class BankAccountController extends Controller
         $this->bankAccount = $bankAccount;
     }
 
-    public function index(): JsonResponse
-    {
-        try {
-            throw new InvalidArgumentException('Method not allowed', 422);
-        } catch (Throwable $e) {
-            return responseHandler()->error($e);
-        }
-    }
-
     public function get(int $id): JsonResponse
     {
         try {

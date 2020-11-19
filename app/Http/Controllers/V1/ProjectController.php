@@ -19,15 +19,6 @@ class ProjectController extends Controller
         $this->project = $project;
     }
 
-    public function index(): JsonResponse
-    {
-        try {
-            throw new InvalidArgumentException('Method not allowed', 422);
-        } catch (Throwable $e) {
-            return responseHandler()->error($e);
-        }
-    }
-
     public function get(int $id): JsonResponse
     {
         try {

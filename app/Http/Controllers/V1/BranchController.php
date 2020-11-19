@@ -16,22 +16,15 @@ class BranchController extends Controller
 
     public function __construct(BranchServiceInterface $branch)
     {
+        $this->authorize('responsible');
         $this->branch = $branch;
     }
 
-    public function index(): JsonResponse
-    {
-        try {
-            throw new InvalidArgumentException('Method not allowed', 422);
-        } catch (Throwable $e) {
-            return responseHandler()->error($e);
-        }
-    }
-
-    public function get(int $id): JsonResponse
+    public function get(Request $request, int $id): JsonResponse
     {
         try {
             $branch = $this->branch->setPrimaryKey($id)->get();
+            $this->authorize('access', $branch);
             return responseHandler()->success(Response::HTTP_OK, $branch);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -53,7 +46,9 @@ class BranchController extends Controller
     {
         try {
             $this->branch->setFillable($request->all());
-            $this->branch->setPrimaryKey($id)->update();
+            $branch = $this->branch->setPrimaryKey($id)->get();
+            $this->authorize('access', $branch);
+            $branch->update();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -63,7 +58,9 @@ class BranchController extends Controller
     public function delete($id): JsonResponse
     {
         try {
-            $this->branch->setPrimaryKey($id)->delete();
+            $branch = $this->branch->setPrimaryKey($id)->get();
+            $this->authorize('access', $branch);
+            $branch->delete();
             return responseHandler()->success(Response::HTTP_OK);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
@@ -73,22 +70,12 @@ class BranchController extends Controller
     public function churches(int $id): JsonResponse
     {
         try {
-            $branches = $this->branch->setPrimaryKey($id)->churches();
-            return responseHandler()->success(Response::HTTP_OK, $branches);
+            $branch = $this->branch->setPrimaryKey($id)->get();
+            $this->authorize('access', $branch);
+            $churches = $branch->churches();
+            return responseHandler()->success(Response::HTTP_OK, $churches);
         } catch (Throwable $e) {
             return responseHandler()->error($e);
         }
     }
-
-    public function projects(int $id): JsonResponse
-    {
-        try {
-            $branches = $this->branch->setPrimaryKey($id)->projects();
-            return responseHandler()->success(Response::HTTP_OK, $branches);
-        } catch (Throwable $e) {
-            return responseHandler()->error($e);
-        }
-    }
-
-
 }
