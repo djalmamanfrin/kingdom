@@ -37,7 +37,7 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) {
-            $exception = new InvalidArgumentException('Unauthorized.', 401);
+            $exception = new InvalidArgumentException('Unauthorized access. Login to access the data', 401);
             return responseHandler()->error($exception);
         }
         return $next($request);
