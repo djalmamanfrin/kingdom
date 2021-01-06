@@ -38,6 +38,11 @@ class ResponseHandler extends Response
         if ($content instanceof Paginator
             || $content instanceof LengthAwarePaginator) {
             $data['meta'] = $content->toArray();
+            unset($data['meta']['first_page_url']);
+            unset($data['meta']['last_page_url']);
+            unset($data['meta']['next_page_url']);
+            unset($data['meta']['prev_page_url']);
+            unset($data['meta']['path']);
             $data['data'] = $data['meta']['data'];
             unset($data['meta']['data']);
             return response()->json($data, $code);

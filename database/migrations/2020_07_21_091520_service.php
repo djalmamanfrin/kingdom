@@ -16,6 +16,7 @@ class Service extends Migration
             $table->boolean('is_active')->default(0);
             $table->string('name');
             $table->mediumText('description');
+            $table->string('tags');
             $table->timestamp('created_at')
                 ->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')

@@ -1,5 +1,9 @@
 <?php
-use Carbon\Carbon;
+use Illuminate\Container\Container;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+
 if (! function_exists('responseHandler')) {
     /**
      * @return App\Handlers\ResponseHandler
@@ -207,22 +211,28 @@ if (! function_exists('showText')) {
 //         return (bool) $arg;
 //     }
 // }
-// if (! function_exists('array_switch')) {
-//     /**
-//      * @param array $conditions
-//      * @param mixed $key
-//      * @return mixed
-//      */
-//     function array_switch(array $conditions, $key)
-//     {
-//         foreach ($conditions as $k => $v) {
-//             if ($key === $k) {
-//                 return $v;
-//             }
-//         }
-//         return null;
-//     }
-// }
+if (! function_exists('array_switch')) {
+    /**
+     * @param array $conditions
+     * @param mixed $key
+     * @return mixed
+     */
+    function array_switch(array $conditions, $key)
+    {
+        foreach ($conditions as $k => $v) {
+            if ($key === $k) {
+                return $v;
+            }
+        }
+        return null;
+    }
+}
+if (! function_exists('paginate')) {
+    function paginate(Collection $items, int $total, int $perPage = 15, int $page = 1, array $options = []): LengthAwarePaginator
+    {
+        return new LengthAwarePaginator($items, $total, $perPage, $page, $options);
+    }
+}
 // if (! function_exists('login')) {
 //     /**
 //      * @return object

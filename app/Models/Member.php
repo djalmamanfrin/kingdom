@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Profile\ProfileInterface;
+use App\Models\Interfaces\ProfileInterface;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
 

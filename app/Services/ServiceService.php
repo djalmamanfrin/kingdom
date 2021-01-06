@@ -6,11 +6,15 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\Service;
 use App\Models\User;
+use App\Repositories\ElasticInterface;
 
 class ServiceService extends AbstractService implements ServiceServiceInterface
 {
-    public function __construct()
+    private ElasticInterface $elastic;
+
+    public function __construct(ElasticInterface $elastic)
     {
+        $this->elastic = $elastic;
         parent::__construct(new Service());
     }
 

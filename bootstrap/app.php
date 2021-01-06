@@ -71,6 +71,7 @@ $app->configure('dictionaries/branch');
 $app->configure('dictionaries/user');
 $app->configure('dictionaries/auth');
 $app->configure('validate_middleware');
+$app->configure('services');
 // Monta dinamicamente os arquivos de configuração da pasta dictionaries
 // foreach (glob(__DIR__ . '/../config/dictionaries/*.php') as $config) {
 //     list($name, $extension) = explode('.', basename($config));
@@ -110,6 +111,7 @@ $app->routeMiddleware([
 */
 
 $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AppRepositoryProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 

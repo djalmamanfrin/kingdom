@@ -6,8 +6,11 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
+        "elasticsearch/elasticsearch": "^7.0",
         "firebase/php-jwt": "^5.2",
-        "laravel/lumen-framework": "^7.2.2"
+        "laravel/lumen-framework": "^7.2.2",
+        "league/csv": "^9.6",
+        "ext-json": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",

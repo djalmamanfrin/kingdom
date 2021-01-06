@@ -25,10 +25,10 @@ class DatabaseSeeder extends Seeder
             AddressSeeder::class,
             BranchSeeder::class,
             // BankAccountSeeder::class,
-            CategorySeeder::class,
+            // CategorySeeder::class,
             ChurchSeeder::class,
             CompanySeeder::class,
-            ServiceSeeder::class,
+            // ServiceSeeder::class,
             // BrandSeeder::class,
             // BankCardSeeder::class,
             // CurrencySeeder::class,
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
             PhoneSeeder::class,
             // ProjectSeeder::class,
             // ProjectItemSeeder::class,
-            WishlistSeeder::class
+            // WishlistSeeder::class
         ]);
         Model::reguard();
     }

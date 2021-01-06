@@ -102,7 +102,7 @@ $factory->define(\App\Models\Church::class, function (Faker $faker) {
 $factory->define(\App\Models\Company::class, function (Faker $faker) {
     return [
         'entrepreneur_id' => \App\Models\Entrepreneur::pluck('id')->random(),
-        'category_id' => \App\Models\Category::pluck('id')->random(),
+        // 'category_id' => \App\Models\Category::pluck('id')->random(),
         'address_id' => factory(\App\Models\Address::class, 1)->create()->get(0)->id,
         'name' => $faker->company,
         'cnpj' => $faker->unique()->numerify('########0001##')
@@ -178,15 +178,16 @@ $factory->define(\App\Models\Product::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\App\Models\Service::class, function (Faker $faker) {
-    $qtd = $faker->randomElement([1, 3, 5, 7]);
-    return [
-        'company_id' => \App\Models\Company::pluck('id')->random(),
-        'is_active' => $faker->boolean(90),
-        'name' => $faker->text(45),
-        'description' => implode('. ', $faker->paragraphs($qtd))
-    ];
-});
+// $factory->define(\App\Models\Service::class, function (Faker $faker) {
+//     $qtd = $faker->randomElement([1, 3, 5, 7]);
+//     return [
+//         'company_id' => \App\Models\Company::pluck('id')->random(),
+//         'is_active' => $faker->boolean(90),
+//         'name' => $faker->text(45),
+//         'description' => implode('. ', $faker->paragraphs($qtd)),
+//         'tags' => $faker->currencyCode
+//     ];
+// });
 
 $factory->define(\App\Models\Item::class, function (Faker $faker) {
     return [

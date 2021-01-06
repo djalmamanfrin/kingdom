@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Profile;
+namespace App\Models\Interfaces;
 
 use App\Models\User;
 use DateTime;
